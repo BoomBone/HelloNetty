@@ -18,18 +18,18 @@ public class HelloServer {
         //从线程组，老板线程组会把任务丢给他，让手下线程组去做任务
         EventLoopGroup workerGroup = new NioEventLoopGroup();
 
-        try{
+        try {
             //netty服务器的创建，ServerBootstrap 是一个启动类
             ServerBootstrap serverBootstrap = new ServerBootstrap();
             serverBootstrap.group(bossGroup, workerGroup)
                     .channel(NioServerSocketChannel.class)
-                    .childHandler(null);
+                    .childHandler(new HelloServerInitializer());
             //启动Server并且设置8088为启动的端口号
             ChannelFuture channelFuture = serverBootstrap.bind(8088).sync();
 
             //用于监听关闭的channel
             channelFuture.channel().closeFuture().sync();
-        }finally {
+        } finally {
             bossGroup.shutdownGracefully();
             workerGroup.shutdownGracefully();
         }
