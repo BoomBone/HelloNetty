@@ -18,7 +18,7 @@ public class WSServerInitializer extends ChannelInitializer<SocketChannel> {
         pipeline.addLast(new ChunkedWriteHandler());
         //对HttpMessage进行聚合，聚合成FullHttpRequest或FullHttpResponse
         //几乎在netty中的编程，都会使用到Handler
-        pipeline.addLast(new HttpObjectAggregator(1024*64));
+        pipeline.addLast(new HttpObjectAggregator(1024 * 64));
 
         /*---------------------------以上适用于支持Http协议-----------------------------------*/
 
@@ -31,6 +31,6 @@ public class WSServerInitializer extends ChannelInitializer<SocketChannel> {
          */
         pipeline.addLast(new WebSocketServerProtocolHandler("/ws"));
 
-        pipeline.addLast(null);
+        pipeline.addLast(new ChatHandler());
     }
 }

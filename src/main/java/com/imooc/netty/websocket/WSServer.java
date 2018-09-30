@@ -17,7 +17,7 @@ public class WSServer {
                     .channel(NioServerSocketChannel.class)
                     .childHandler(new WSServerInitializer());
 
-            ChannelFuture future = serverBootstrap.bind(8088).sync();
+            ChannelFuture future = serverBootstrap.bind(8090).sync();
 
             future.channel().closeFuture().sync();
         } finally {
